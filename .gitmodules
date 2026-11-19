@@ -1,0 +1,3 @@
+[submodule "AtlasNet-SourceBridge"]
+	path = AtlasNet-SourceBridge
+	url = https://github.com/CamilaBasualdoCibils/AtlasNet-SourceBridge.git
