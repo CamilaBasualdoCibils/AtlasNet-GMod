@@ -1,0 +1,106 @@
+{
+  "program": "${workspaceFolder}/build/atlasnet/AtlasNetNode",
+  "cwd": "${workspaceFolder}/build",
+  "preLaunchCommand": "",
+  "clusterPort": 17230,
+  "handshakePort": 18230,
+  "valkeyURI": "tcp://127.0.0.1:46379",
+  "valkeyProgram": "${workspaceFolder}/build/_deps/valkey-src/src/valkey-server",
+  "clusterMode": "direct",
+  "clusterSettings": {
+    "spatialPlane": "XY",
+    "controller": {
+      "heuristic": "example.xsplit2d",
+      "dimension": 2,
+      "shards": {
+        "desired_count": 2
+      },
+      "spatial": {
+        "recompute_interval": "3s"
+      }
+    },
+    "region_transfer": {
+      "hysteresis_distance": 5
+    }
+  },
+  "groups": [
+    {
+      "name": "GMod ingress, Controller and Database",
+      "count": 1,
+      "capabilities": [
+        "Database",
+        "ControllerEligible",
+        "ClientIngress",
+        "Shard",
+        "ControlPanel"
+      ],
+      "args": [],
+      "nodeSettings": {
+        "modules": [
+          "${workspaceFolder}/build/xsplit/AtlasNetXAxisSplit.so",
+          "${workspaceFolder}/build/atlasnet_source1.so"
+        ],
+        "metrics": {
+          "port": 27280
+        },
+        "ingress-endpoints": [
+          {
+            "id": "gmod-distributed",
+            "name": "source1",
+            "args": {
+              "address": "127.0.0.1",
+              "port": 27215,
+              "backend_port": 27216,
+              "gateway_socket": "${runtime}/gateway-a.sock",
+              "spawn": "GModWest",
+              "simulation": true
+            }
+          }
+        ],
+        "control_panel": {
+          "address": "127.0.0.1",
+          "port": 27270
+        },
+        "shards": {
+          "max_count": 1
+        }
+      }
+    },
+    {
+      "name": "GMod ingress and shard node B",
+      "count": 1,
+      "capabilities": [
+        "Database",
+        "Shard",
+        "ClientIngress"
+      ],
+      "args": [],
+      "nodeSettings": {
+        "modules": [
+          "${workspaceFolder}/build/xsplit/AtlasNetXAxisSplit.so",
+          "${workspaceFolder}/build/atlasnet_source1.so"
+        ],
+        "metrics": {
+          "port": 27281
+        },
+        "shards": {
+          "max_count": 1
+        },
+        "ingress-endpoints": [
+          {
+            "id": "gmod-distributed-b",
+            "name": "source1",
+            "args": {
+              "address": "127.0.0.1",
+              "port": 27315,
+              "backend_port": 27316,
+              "gateway_socket": "${runtime}/gateway-b.sock",
+              "spawn": "GModEast",
+              "simulation": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

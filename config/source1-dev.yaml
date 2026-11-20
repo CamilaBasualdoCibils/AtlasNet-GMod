@@ -1,0 +1,19 @@
+node:
+  capabilities: [Database, ClientIngress, Shard, ControllerEligible]
+  valkey:
+    uri: tcp://127.0.0.1:16379
+  shards:
+    max_count: 1
+  metrics:
+    port: 27180
+  ingress-endpoints:
+    - id: source1-main
+      name: source1
+      args:
+        address: 127.0.0.1
+        port: 27015
+        backend_address: 127.0.0.1
+        backend_port: 27016
+        gateway_socket: gateway.sock
+        admission: AllowAll
+        spawn: GModDemo

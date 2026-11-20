@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AtlasNet TUI",
+      "type": "process",
+      "command": "bash",
+      "args": ["${workspaceFolder}/tools/run-atlasnet-tui.sh"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+/build/
+/build-*/
+/.dev/
+/.build/stacklogs/
+/.vscode/atlasnet-generated/
